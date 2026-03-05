@@ -1,0 +1,275 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  grid-template-rows: auto auto auto;
+  gap: 20px;
+  padding: 20px;
+  background: #f3f4f6;
+}
+
+
+.card {
+  background: #e5e7eb;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+
+.profile {
+  text-align: center;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #d1d5db;
+  margin: 0 auto 15px;
+}
+
+.role-btn {
+  background: #d1d5db;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin: 5px 0;
+}
+
+.logout-btn {
+  margin-top: 10px;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.mini-card {
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+
+.create-btn {
+  background: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+body {
+  background: #0f172a;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: #f3f3f3;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.profile {
+  text-align: center;
+}
+
+.profile-img {
+  width: 90px;
+  height: 90px;
+  background: gray;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.role-btn {
+  background: #e4e4e4;
+  border: none;
+  padding: 6px 12px;
+  margin-top: 8px;
+  border-radius: 6px;
+  color: black;
+}
+
+.logout-btn {
+  background: #f3f3f3;
+  border: none;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 6px;
+  color: black;
+  width: 100%;
+  border:1px solid #e5e7eb;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view {
+  cursor: pointer;
+  font-size: 14px;
+  color: black;
+}
+
+.create-btn {
+  padding: 10px;
+  width: 120px;
+  background: #e4e4e4;
+  border: none;
+  border-radius: 6px;
+  color: black;
+  cursor: pointer;
+  margin-top: 102px;
+}
+
+.mini-card {
+  background: #e4e4e4;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #e4e4e4;
+  padding: 30px;
+  width: 400px;
+  border-radius: 12px;
+  position: relative;
+  animation: popup 0.3s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.modal-box input,
+.modal-box textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  border-radius: 6px;
+  border: none;
+}
+
+.primary-btn {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background: #06b6d4;
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+
+@keyframes popup {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.profile { grid-column: 1; grid-row: 1; }
+.service { grid-column: 2; grid-row: 1; }
+.announcements { grid-column: 3; grid-row: 1 / span 2; }
+
+.calendar { grid-column: 1 / span 2; grid-row: 2; }
+
+.room { grid-column: 1; grid-row: 3; }
+.deliveries { grid-column: 2; grid-row: 3; }
+.whats-on { grid-column: 3; grid-row: 3; }
+
+@media (max-width: 1200px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    padding: 15px;
+  }
+
+  .card {
+    min-height: auto;
+  }
+
+  .create-btn {
+    width: 100%;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .card {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  .create-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+}

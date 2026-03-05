@@ -1,0 +1,469 @@
+<div class="page-wrapper">
+<br>
+    
+    <div class="stats-grid" style="display:flex; justify-content: space-between; display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;">
+      <div class="card">
+        <div style="display:flex;gap:39%;">
+        <h4>Check In/Out</h4>
+        <img src="assets/checkin.png" style="width:40px;height:39px;"/>
+        </div>
+        <h2><span class="purple">12</span>/<span>4</span></h2>
+        <p class="success" style="color: green;">+2.3% <span style="color:black;">since last week</span></p>
+      </div>
+
+      <div class="card" >
+        <div style="display:flex;gap:39%;">
+        <h4>Occupancy Rate</h4>
+        <img src="assets/occupancy.png" style="width:40px;height:39px;"/>
+        </div>
+        <h2 style="color:purple;">92%</h2>
+        <p class="danger" style="color:red">-2.3%</p>
+      </div>
+
+      <div class="card">
+        <div style="display: flex;gap:36%;">
+        <h4>Open Tasks</h4>
+        <img src="assets/tree.png" style="width:40px;height:39px;"/>
+        </div>
+        <h2>18</h2>
+        <p class="success" style="color:green">+2.3% <span style="color:black;">since yesterday</span></p>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;gap:39%;">
+        <h4>Monthly Revenue</h4>
+        <img src="assets/cash.png" style="width:40px;height:39px;"/>
+        </div>
+        <h2>92%</h2>
+        <p class="success"style="color:green">+2.3% <span style="color:black">vs last month</span></p>
+      </div>
+    </div>
+
+    
+    <div class="card large-card" style="height:402px;">
+      <h3>Occupancy Analytics</h3>
+      <div class="chart-placeholder" style="height:333px">
+      <canvas style="height:333px"  #occupancyChart  ></canvas>
+      </div>
+    </div>
+
+
+ <div class="dashboard"style="display: flex;
+    gap: 15px;">
+
+
+ <div class="card" style="width:50%;">
+  <div class="card-header">
+    <h3>Bookings</h3>
+    
+    <button *ngIf="!isCalendarOpen" (click)="openBookingCalendar()" style="background:#14b8a6;border: none;color:white;cursor: pointer;transition: 0.3 ease;    height: 37px;
+    border-radius: 8px;">Booking Calendar</button>
+  </div>
+
+  
+  <div class="status-row">
+    <div class="status-box">
+      <p>Confirmed</p>
+      <span class="green">{{confirmedPercent}}</span>
+    </div>
+    <div class="status-box">
+      <p>Pending</p>
+      <span class="yellow">{{pendingPercent}}</span>
+    </div>
+    <div class="status-box">
+      <p>Cancelled</p>
+      <span class="red">{{cancelledPercent}}</span>
+    </div>
+  </div>
+
+  <h4>Overview</h4>
+  <br>
+  <div style="display: flex; height: 10px; border-radius: 10px; overflow: hidden;">
+    <div style="background-color: #22c55e; height: 100%;" [style.width.%]="confirmedPercent"></div>
+    <div style="background-color: #f59e0b; height: 100%;" [style.width.%]="pendingPercent"></div>
+    <div style="background-color: #ef4444; height: 100%;" [style.width.%]="cancelledPercent"></div>
+  </div>
+  <br>
+
+ 
+  <div class="progress-item" *ngFor="let item of bookingList">
+    <label>{{item.name}}</label>
+    <div class="bar">
+      <div class="fill" [style.width.%]="item.value"></div>
+      <span class="value">{{item.value}}</span>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isCalendarOpen" class="modal" style="position: fixed; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:999; display:flex; justify-content:center; align-items:center;">
+  <div style="background:darkgrey; padding:20px; border-radius:10px; width:80%; max-width:500px;">
+    <div style="display:flex;gap:175px;">
+    <h3>Booking Calendar</h3>
+    <button (click)="closeBookingCalendar()"><mat-icon>close</mat-icon></button>
+    </div>
+    <ul style="list-style: none;">
+      <li *ngFor="let b of booking" [style.color]="getBookingStatusColor(b.status)">
+        {{b.title}} - {{b.status}}
+      </li>
+    </ul>
+  </div>
+</div>
+ 
+  <div class="card" style="width:50%;">
+    <div class="card-header">
+      <h3>Tasks</h3>
+      <button class="primary-btn" (click)="openAllTasks()">View all</button>
+    </div>
+
+    <div class="status-row">
+      <div class="status-box">
+        <p>In progress</p>
+        <span class="blue">{{inProgress}}</span>
+      </div>
+      <div class="status-box">
+        <p>Outstanding</p>
+        <span class="yellow">{{outstanding}}</span>
+      </div>
+      <div class="status-box">
+        <p>Completed</p>
+        <span class="green">{{completed}}</span>
+      </div>
+    </div>
+
+    <h4>Progress Overview</h4>
+
+    <br>
+    <div class="progress-bar" style="display: flex;
+  height: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+ flex-direction: row;">
+  <div class="blue-bar" style="background:blue; height:100%" [style.width.%]="inProgressPercent"></div>
+  <div class="yellow-bar" style="background:yellow; height:100%" [style.width.%]="outstandingPercent"></div>
+  <div class="green-bar" style="background:green; height:100%" [style.width.%]="completedPercent"></div>
+</div>
+    <br>
+    <div class="task-list">
+      <div class="task-item" style="background:white;" *ngFor="let task of tasks">
+        <div>
+          <p class="task-title">{{task.title}}</p>
+          <small>{{task.user}}</small>
+          <span class="tag" style="
+  position: relative;    top: 24px;
+    left: -47px;" [ngClass]="task.status">
+            {{task.status}}
+          </span>
+        </div>
+        <small>{{task.time}}</small>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div *ngIf="isTaskOpen" class="modal" 
+     style="position: fixed;  width:100%; height:100%; 
+            background: rgba(0,0,0,0.5); z-index:999; display:flex; 
+            justify-content:center; align-items:center;">
+  <div style="background:darkgrey;border: none; padding:20px; border-radius:10px; width:80%; max-width:500px;">
+    <div style="display:flex;gap:175px;">
+    <h3>All Tasks</h3>
+    <button (click)="closeTaskModal()"style="    margin-left: 143px;
+    background: transparent;
+    border: none;"><mat-icon >close</mat-icon></button>
+    </div>
+    <ul style="list-style: none;">
+      <li *ngFor="let t of taskList" [style.color]="getTaskStatusColor(t.status)">
+        {{t.name}} - {{t.status}}
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="defect-container">
+
+
+  <div class="header">
+    <h2>Defect Insights</h2>
+
+   <select class="floor-select"
+        [(ngModel)]="selectedFloor"
+        (change)="onFloorChange(selectedFloor)">
+
+  <ng-container *ngFor="let f of floors">
+    <option [value]="f">{{f}}</option>
+  </ng-container>
+
+</select>
+  </div>
+
+ 
+  <div class="card-wrapper">
+
+    <div class="defect-card" *ngFor="let defect of filteredDefects">
+
+      <div class="card-top">
+        <h3>{{defect.title}}</h3>
+        <span class="badge critical">{{defect.priority}}</span>
+      </div>
+
+      <p class="sub-text">
+        {{defect.description}}
+      </p>
+
+      <div class="info-grid">
+        <div class="info-box">
+          <label>Category</label>
+          <p>{{defect.category}}</p>
+        </div>
+
+        <div class="info-box">
+          <label>Last Occurrence</label>
+          <p>{{defect.lastOccurrence}}</p>
+        </div>
+
+        <div class="info-box">
+          <label>Assigned To</label>
+          <p>{{defect.assignedTo || 'None'}}</p>
+        </div>
+
+        <div class="info-box">
+          <label>Confidence</label>
+          <p>{{defect.confidence}}</p>
+        </div>
+      </div>
+
+      <div class="impact-cost">
+        <div>
+          Expected Impact <span class="impact">{{defect.impact}}</span>
+        </div>
+        <div>
+          Estimated Cost <span class="cost">{{defect.cost}}</span>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <strong>Recommendation</strong>
+        <p>{{defect.recommendation}}</p>
+      </div>
+
+      
+      <button *ngIf="!defect.assignedTo"
+              class="assign-btn"
+              (click)="openAssignModal()">
+        Assign
+      </button>
+
+      <button *ngIf="defect.assignedTo"
+              class="reassign-btn"
+              (click)="openAssignModal()">
+        Re-Assign
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+<div 
+  class="modal-overlay" 
+  *ngIf="isAssignOpen"
+  (click)="isAssignOpen = false"
+  style="
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  "
+>
+
+  <div 
+    class="modal-content" 
+    (click)="$event.stopPropagation()"
+    style="
+      background: darkgrey;
+      padding: 20px;
+      border-radius: 8px;
+      width:431px;
+    "
+  >
+    <h3>Select Staff</h3>
+    <select style="border:none" [(ngModel)]="selectedStaff">
+      <option *ngFor="let staff of staffList" [value]="staff">
+        {{staff}}
+      </option>
+    </select>
+    <br><br>
+    <button (click)="confirmAssign()" style="    border-radius: 8px;
+    border: none;
+    background: cadetblue">Confirm</button>
+    <br>
+    <button (click)="isAssignOpen=false" style="    border-radius: 8px;
+    border: none;
+    background: cadetblue">Cancel</button>
+  </div>
+</div>
+<br>
+<div class="grid-2" style="display: grid;
+    grid-template-columns: repeat(2, 1fr);">
+
+
+<div class="card" style=" padding:20px;">
+  <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>What’s on</h3>
+    <button class="calendar-btn" (click)="openCalendarModal()" 
+            style="padding:6px 12px; background:#73D5D3; color:white; border:none; border-radius:5px;">
+      View Calendar
+    </button>
+  </div>
+
+ 
+  <div class="current-event" style="display:flex; gap:10px; margin-top:15px; align-items:center;">
+    <div class="icon" style="width:24px; height:24px; background:green; border-radius:50%;">✔</div>
+    <div>
+      <h4 style="margin:0;">Building inspection</h4>
+      <p style="margin:0; font-size:0.9em; color:gray;">Today 10 AM</p>
+    </div>
+  </div>
+
+  
+  <h5 class="upcoming-title" style="margin-top:20px;">Upcoming</h5>
+  <div class="event-list">
+    <div class="event" *ngFor="let e of upcomingEvents" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+      <div>
+        <p class="event-title" style="margin:0;">{{e.title}}</p>
+        <span>{{e.time}}</span>
+      </div>
+      <span class="event-day">{{e.day}}</span>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isCalendarOpen" class="modal" 
+     style="position:fixed; width:100%; height:100%;
+            background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:999;">
+  <div style="background:darkgrey; padding:20px; border-radius:10px; width:80%; max-width:500px;">
+    <div style="display:flex;  gap: 175px;position: relative;">
+    <h3>Full Event Calendar</h3>
+    <button (click)="closeCalendarModal()" style="margin-bottom:15px;background:darkgrey;border:none"><mat-icon>close</mat-icon></button>
+    </div>
+    <ul style="list-style: none;">
+      <li *ngFor="let e of allEvents">
+        {{e.title}} - {{e.date}} {{e.time}}
+      </li>
+    </ul>
+  </div>
+</div>
+
+  <div>
+
+  
+   <div class="card" style="padding:20px; ">
+  <h3>Create Post</h3>
+
+ 
+  <button class="full-btn" 
+          style="background: white; color: #73D5D3; gap: 5px; border: 1px solid #73D5D3;  height:44px;"  
+          (click)="openEventModal()">
+    <img src="assets/calendar2.png" alt="Calendar"/> Schedule Event
+  </button>
+
+  <button class="full-btn outline" 
+          style="background:#73D5D3; color:white;border:none;  height:44px; margin-top:10px;" 
+          (click)="openCommunityModal()">
+    <img src="assets/chats.png" alt="Chats"/> Community Update
+  </button>
+</div>
+
+
+<div *ngIf="isCommunityOpen" class="modal"
+     style="position:fixed; width:100%; height:100%;
+            background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:999;">
+  <div style="background:darkgrey; padding:20px; border-radius:10px; width:80%; max-width:500px;">
+    <div style="display:flex;  gap: 175px;position: relative;">
+    <h3>Community Updates</h3>
+    <button (click)="closeCommunityModal()" style="background:darkgrey;border:none"><mat-icon>close</mat-icon></button>
+    </div>
+    <ul style="list-style: none;" >
+      <li *ngFor="let post of postList">{{post.text}}</li>
+    </ul>
+  </div>
+</div>
+
+
+<div *ngIf="isEventOpen" class="modal"
+     style="position:fixed;  width:100%; height:100%;
+            background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:999;">
+  <div style="background:darkgrey; padding:20px; border-radius:10px; width:80%; max-width:500px;">
+    <div style="display:flex;  gap: 175px;position: relative;">
+    <h3>Schedule Event</h3>
+    <button (click)="closeEventModal()" style="background: darkgrey;border:none; margin-left:63px;"><mat-icon>close</mat-icon></button>
+    </div>
+    <ul style="list-style: none;">
+      <li *ngFor="let event of eventList">{{event.title}} - {{event.date}} {{event.time}}</li>
+    </ul>
+  </div>
+</div>
+   
+    <div class="card">
+      <h3>AI Assistant Chatbot</h3>
+      <br>
+      <div class="chat-box">
+      <div *ngFor="let msg of messages">
+      {{msg.text}}
+      </div>
+      </div>
+      <div style="display: flex; gap:4px;">
+      <input type="text" [(ngModel)]="userMessage" placeholder="Ask anything..." (keyup.enter)="sendMessage()" class="chat-input" style="width:100%"/>
+      <button (click)="sendMessage()" class="primary-btn" style="    background: aqua;
+    height: 42px;
+    top: 9px;
+    position: relative;"><img src="assets/icon.png"/></button>
+      </div>
+      <br>
+      <mat-card class="chat-message">
+        <br>
+        <h2 style="font-size:17px;position: relative;
+    left: 8px;">Recommedations</h2>
+        <p>. Show today's maintenance tasks</p>
+        <p>. Occupancy rate this month</p>
+        <p>. Urgent complaints summary</p>
+
+      </mat-card>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+

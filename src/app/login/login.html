@@ -1,0 +1,32 @@
+
+
+<fieldset>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+<mat-button-toggle-group  name="fontStyle" aria-label="Font Style" class="btngroup">
+  <mat-button-toggle class="btntoggle" (click)="login()">Login</mat-button-toggle>
+  <mat-button-toggle class="btntoggle" (click)="signup()">Signup</mat-button-toggle>
+</mat-button-toggle-group>
+<br><br>
+<mat-form-field class="form" >
+  <mat-label>Email</mat-label>
+  <input matInput formControlName="email">
+  <mat-icon >mail</mat-icon>
+  
+   
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Password</mat-label>
+  <input matInput formControlName="password">
+ 
+</mat-form-field>
+
+<mat-checkbox><mat-label class="Remember">Remember me</mat-label></mat-checkbox>
+  
+
+<button type="submit" [disabled]="this.myForm.invalid">Submit
+</button>
+<p class="account">Don't have an account? <a class="anchor" (click)="sign()">Signup</a></p>
+
+
+</form>
+</fieldset>

@@ -1,0 +1,32 @@
+<div class="navbar">
+  <img class="img"  src="assets/logo.png"/>
+  <input type="text" placeholder="Search query..." class="search-box"  [(ngModel)]="searchQuery" (input)="onSearch()" style="color:white;">
+    <img class="notification" src="assets/notify.png" class="notification"  (click)="toggleNotifications()"/>
+     <div class="notification-panel" *ngIf="showNotifications">
+    <p *ngIf="notifications.length === 0" style="margin-top:15px;">No new notifications</p>
+    <ul>
+      <li *ngFor="let note of notifications">{{ note }}</li>
+    </ul>
+  </div>
+    <div>
+    <button class="btn" (click)="openModal('announcement')">+ Create announcement</button>
+    </div>
+</div>
+<div class="modal-overlay"
+     *ngIf="activeModal"
+     (click)="closeModal()">
+
+  <div class="modal-box"
+       (click)="$event.stopPropagation()">
+
+    <span class="close-btn"
+          (click)="closeModal()">✖</span>
+
+    <h2>{{ activeModal | titlecase }}</h2>
+
+    <input type="text" placeholder="Title">
+    <textarea placeholder="Description"></textarea>
+    <button class="primary-btn">Submit</button>
+
+  </div>
+</div>

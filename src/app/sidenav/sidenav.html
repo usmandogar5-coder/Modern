@@ -1,0 +1,73 @@
+<app-nav></app-nav>
+<div class="app-layout">
+
+
+  <div class="sidebar">
+
+   <br>
+    <div class="mb-3">
+      <p class="section-title">main</p>
+      <hr>
+    </div>
+
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" style="color:white" (click)="dashboard()">
+          <img src="assets/home.png" class="icon me-2"/>
+          Dashboard
+        </a>
+      </li>
+
+      <li><a class="nav-link" style="color:white;" ><img src="assets/calendar.png" class="icon me-2" /> Calendar</a></li>
+      <li><a class="nav-link" style="color:white;" ><img src="assets/book.png" class="icon me-2" /> Bookings</a></li>
+      <li><a class="nav-link" style="color:white;" ><img src="assets/project.png" class="icon me-2" /> Projects</a></li>
+      <li><a class="nav-link" style="color:white;" ><img src="assets/tasks.png" class="icon me-2" /> Tasks</a></li>
+      <li><a class="nav-link" style="color:white;" ><img src="assets/files.png" class="icon me-2" /> Files</a></li>
+    </ul>
+
+    
+    <div class="mt-4 mb-3">
+      <p class="section-title">other</p>
+      <hr>
+    </div>
+
+    <ul class="nav flex-column">
+      <li><a class="nav-link" style="color:white;" ><img src="assets/holidays.png" class="icon me-2" /> Holidays</a></li>
+      <li><a class="nav-link" style="color:white;" ><img src="assets/people.png" class="icon me-2" /> People</a></li>
+      <li><a class="nav-link" style="color:white;" ><mat-icon class="me-2">diversity_2</mat-icon> Teams</a></li>
+      <li><a class="nav-link" style="color:white;" ><img src="assets/chats.png" class="icon me-2" /> Chats</a></li>
+      <li><a class="nav-link" style="color:white;" ><img src="assets/announce.png" class="icon me-2" /> Announcements</a></li>
+    </ul>
+
+    
+    <div class="sidebar-footer">
+      <hr>
+      <div class="dropdown" [class.show]="isDropdownOpen">
+        <div class="d-flex align-items-center cursor-pointer"
+             (click)="toggleDropdown()">
+          <img src="assets/avatar.png"
+               width="32"
+               height="32"
+               class="rounded-circle me-2">
+          <strong>Roselle Ehrman</strong>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </div>
+
+        <ul class="dropdown-menu dropdown-menu-dark" style="top: -99px;
+    left: 96px;"
+            [class.show]="isDropdownOpen">
+          <li><a class="dropdown-item" (click)="profile()">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="logout()">Log out</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="main-content">
+    <app-dashboard></app-dashboard>
+  </div>
+
+</div>

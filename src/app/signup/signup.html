@@ -1,0 +1,67 @@
+<fieldset>
+<form [formGroup]="myForm" (ngSubmit)="onSignup()">
+<mat-button-toggle-group  name="fontStyle" aria-label="Font Style" class="btngroup">
+  <mat-button-toggle class="btn" (click)="login()">Login</mat-button-toggle>
+  <mat-button-toggle class="btn" (click)="signup()">Signup</mat-button-toggle>
+</mat-button-toggle-group>
+<h1>Registration Form</h1>
+<div class="div">
+<mat-form-field class="a" >
+  <mat-label>First Name</mat-label>
+  <input matInput formControlName="firstName">
+  <mat-icon class="icon">person</mat-icon>
+  
+   
+</mat-form-field>
+<mat-form-field class="a" >
+  <mat-label>Last Name</mat-label>
+  <input matInput formControlName="lastName">
+  <mat-icon class="icon">person</mat-icon>
+  </mat-form-field>
+  <mat-form-field class="a" >
+  <mat-label class="icon">Email</mat-label>
+  <input matInput formControlName="email">
+  <mat-icon  class="icon">mail</mat-icon>
+  </mat-form-field>
+</div> 
+<div class="div">
+<mat-form-field class="a" >
+  <mat-label>Phone Number</mat-label>
+  <input matInput formControlName="Phone">
+  <mat-icon class="icon">phone_enabled</mat-icon>
+  
+   
+</mat-form-field>
+<mat-form-field class="a" >
+  <mat-label>Address</mat-label>
+  <input matInput formControlName="Address">
+  <mat-icon class="icon">home</mat-icon>
+  </mat-form-field>
+  <mat-form-field class="a" >
+  <mat-label>City</mat-label>
+  <input matInput formControlName="City">
+  <mat-icon class="icon">moped_package</mat-icon>
+  </mat-form-field>
+</div> 
+<div class="div">
+<mat-form-field class="a">
+   <mat-label>Password</mat-label>
+  <input matInput formControlName="password" id="password">
+
+  <mat-icon class="icon" >lock</mat-icon>
+  <div *ngIf="myForm.get('password')?.hasError('required') && myForm.get('password')?.touched"></div>
+</mat-form-field>
+<mat-form-field class="a">
+   <mat-label>Confirm Password</mat-label>
+  <input matInput formControlName="Confirmpassword" id="confirmpassword">
+  <mat-icon class="icon">key</mat-icon>
+     <span  class="success" *ngIf="PasswordsMatch && myForm.touched"></span>
+     <span  class="error" *ngIf="!PasswordsMatch && !myForm.touched"></span>
+</mat-form-field>
+
+</div>
+<button class="btn"[disabled]="this.myForm.invalid">Submit</button>
+   
+
+</form>
+</fieldset>
